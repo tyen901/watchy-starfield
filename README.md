@@ -1,3 +1,18 @@
+# Repaired Starfield Watchy Firmware
+
+This repository contains a repaired version of the Starfield Watchy firmware.
+
+## Recommendations
+
+- Consider using [InkWatchy](https://github.com/Szybet/InkWatchy)  for a more refined experience compared to the default firmware.
+
+## Support
+
+If you find this project useful, please consider donating to support further development and maintenance of Watchy.
+
+Thank you for your support!
+
+
 # watchy-starfield
 
 starfield watchface for Watchy
