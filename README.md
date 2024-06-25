@@ -2,17 +2,23 @@
 
 This repository contains a repaired version of the Starfield Watchy firmware.
 
-## Recommendations
-
-- Consider using [InkWatchy](https://github.com/Szybet/InkWatchy)  for a more refined experience compared to the default firmware.
+## For you to know
+- Consider using [InkWatchy](https://github.com/Szybet/InkWatchy) (or any other modern firmware) for a more "refined" experience compared to the default firmware.
+- In the release tab you will find a binary you can flash yourself, just as inkwatchy demo (look up the wiki of inkwatchy for guidance)
+- Only use platformio, not arduino IDE.
 
 ## Support
 
-If you find this project useful, please consider donating to support further development and maintenance of Watchy.
+If you find this project useful, please consider donating to support further development for all watchy related things! More info in InkWatchy repo
 
-Thank you for your support!
+# Links to check out
+https://github.com/Szybet/WatchySourcingHub
 
+* * *
+* * *
+* * *
 
+The rest of this readme is from the original author
 # watchy-starfield
 
 starfield watchface for Watchy
