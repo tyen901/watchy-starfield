@@ -60,7 +60,7 @@ void Watchy7SEG::drawWatchFace()
 {
     display.fillScreen(DARKMODE ? GxEPD_BLACK : GxEPD_WHITE);
     display.setTextColor(DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-    drawFiel ();
+    drawField();
     drawTime();
     drawDate();
     drawSteps();
@@ -574,11 +574,10 @@ void Watchy7SEG::drawBattery()
     display.fillRect(155, 169, batteryLevel, 15, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
 }
 
-void Watchy7SEG::drawFiel()
+void Watchy7SEG::drawField()
 {
     display.drawBitmap(0, 0, field, 200, 200, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
 }
-
 
 void Watchy7SEG::drawMoon() {
     moonData_t moon;                        // variable to receive the data

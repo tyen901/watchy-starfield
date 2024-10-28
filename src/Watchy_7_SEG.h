@@ -21,7 +21,7 @@ class Watchy7SEG : public Watchy{
 //        void drawEva();
         void drawBattery();
 //        void drawLine();
-        void drawFiel();
+        void drawField();
         void drawMoon();
 
         void drawSun();
