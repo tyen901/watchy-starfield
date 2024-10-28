@@ -16,12 +16,12 @@ RTC_DATA_ATTR bool HOUR_SET = true;
 
 moonPhaser moonP;
 
-void Watchy7SEG::handleButtonPress(WatchyButton button)
+void Watchy7SEG::handleButtonPress()
 {
     if (guiState == WATCHFACE_STATE)
     {
         uint64_t wakeupBit = esp_sleep_get_ext1_wakeup_status();
-        if (wakeupBit & UP_BTN_MASK)
+        if (wakeupBit & UP_BTN_MASK) 
         {
             // showState++;
             // if (showState > 2) { showState = 0; }
@@ -48,15 +48,11 @@ void Watchy7SEG::handleButtonPress(WatchyButton button)
         } 
         if (wakeupBit & MENU_BTN_MASK) 
         {
-            Watchy::handleButtonPress(button);
+            Watchy::handleButtonPress();
             return;
         }
     } 
-    else
-    {
-        Watchy::handleButtonPress(button);
-    }
-
+    else {Watchy::handleButtonPress();}
     return;
 }
 
