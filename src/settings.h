@@ -2,10 +2,10 @@
 #define SETTINGS_H
 
 //Weather Settings
-//#define CITY_ID "2179537" //New York City https://openweathermap.org/current#cityid
+//#define CITY_ID "2179537" // Wellington, NZ https://openweathermap.org/current#cityid
 
 //You can also use LAT,LON for your location instead of CITY_ID, but not both
-#define LAT "-41.28664" //New York City, Looked up on https://www.latlong.net/
+#define LAT "-41.28664" // Wellington, NZ, Looked up on https://www.latlong.net/
 #define LON "174.77557"
 
 #ifdef CITY_ID
