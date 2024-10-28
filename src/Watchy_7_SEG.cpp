@@ -543,61 +543,36 @@ void Watchy7SEG::drawSteps()
         display.drawBitmap(92, 165, dd_8, 16, 25, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
     else if (e == 9)
         display.drawBitmap(92, 165, dd_9, 16, 25, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-
-
-
 }
+
+int mapBatteryLevel(float voltage, float minVoltage, float maxVoltage, int minLevel, int maxLevel)
+{
+    if (voltage <= minVoltage) {
+        return minLevel;
+    } else if (voltage >= maxVoltage) {
+        return maxLevel;
+    } else {
+        return (int)((voltage - minVoltage) * (maxLevel - minLevel) / (maxVoltage - minVoltage) + minLevel);
+    }
+}
+
 void Watchy7SEG::drawBattery()
 {
-    // display.drawBitmap(154, 73, battery, 37, 21, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-    // display.fillRect(159, 78, 27, BATTERY_SEGMENT_HEIGHT, DARKMODE ? GxEPD_BLACK : GxEPD_WHITE);//clear battery segments
-    int8_t batteryLevel = 0;
     float VBAT = getBatteryVoltage();
-    if(VBAT > 4.1)
-    {
-        batteryLevel = 37;
-    }
-    else if(VBAT > 4.05 && VBAT <= 4.1)
-    {
-        batteryLevel = 33;
-    }
-    else if(VBAT > 4 && VBAT <= 4.05)
-    {
-        batteryLevel = 28;
-    }
+    int maxWidth = 37;
 
-    else if(VBAT > 3.95 && VBAT <= 4)
-    {
-        batteryLevel = 23;
-    }
-    else if(VBAT > 3.9 && VBAT <= 3.95)
-    {
-        batteryLevel = 18;
-    }
-    else if(VBAT > 3.85 && VBAT <= 3.9)
-    {
-        batteryLevel = 13;
-    }
-    else if(VBAT > 3.8 && VBAT <= 3.85)
-    {
-        batteryLevel = 8;
-    }
-    else if(VBAT > 3.75 && VBAT <= 3.8)
-    {
-        batteryLevel = 4;
-    }
-    else if(VBAT <= 3.75)
-    {
-        batteryLevel = 0;
-    }
+#ifdef ARDUINO_ESP32S3_DEV
+    float MaxVBAT = 3.9;
+    float MinVBAT = 3.6;
+#else   
+    float MaxVBAT = 4.1;
+    float MinVBAT = 3.8;
+#endif
 
-    // for(int8_t batterySegments = 0; batterySegments < batteryLevel; batterySegments++)
-    // {
-        display.fillRect(155, 169, batteryLevel, 15, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-    // }
+    int batteryLevel = mapBatteryLevel(VBAT, MinVBAT, MaxVBAT, 0, maxWidth);
+
+    display.fillRect(155, 169, batteryLevel, 15, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
 }
-
-
 
 void Watchy7SEG::drawFiel()
 {
