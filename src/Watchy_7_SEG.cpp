@@ -6,8 +6,8 @@
 // HOUR_SET, change it to 12 to switch to 12-hour
 // #define HOUR_SET 24
 
-// change it to your location 
-//          latitude, longitude, timezone
+// change it to your location
+// latitude, longitude, timezone
 #define LOC -41.28664, 174.77557, 13
 
 RTC_DATA_ATTR bool DARKMODE = false;
@@ -21,7 +21,7 @@ void Watchy7SEG::handleButtonPress()
     if (guiState == WATCHFACE_STATE)
     {
         uint64_t wakeupBit = esp_sleep_get_ext1_wakeup_status();
-        if (wakeupBit & UP_BTN_MASK) 
+        if (wakeupBit & UP_BTN_MASK)
         {
             // showState++;
             // if (showState > 2) { showState = 0; }
@@ -30,7 +30,7 @@ void Watchy7SEG::handleButtonPress()
             showWatchFace(true);
             return;
         }
-        if (wakeupBit & DOWN_BTN_MASK) 
+        if (wakeupBit & DOWN_BTN_MASK)
         {
             // showState--;
             // if (showState < 0) { showState = 2; }
@@ -39,20 +39,23 @@ void Watchy7SEG::handleButtonPress()
             showWatchFace(true);
             return;
         }
-        if (wakeupBit & BACK_BTN_MASK) 
+        if (wakeupBit & BACK_BTN_MASK)
         {
             DARKMODE = !DARKMODE;
             RTC.read(currentTime);
             showWatchFace(true);
             return;
-        } 
-        if (wakeupBit & MENU_BTN_MASK) 
+        }
+        if (wakeupBit & MENU_BTN_MASK)
         {
             Watchy::handleButtonPress();
             return;
         }
-    } 
-    else {Watchy::handleButtonPress();}
+    }
+    else
+    {
+        Watchy::handleButtonPress();
+    }
     return;
 }
 
@@ -81,13 +84,13 @@ void Watchy7SEG::drawWatchFace()
 void Watchy7SEG::drawTime()
 {
     display.setFont(&DSEG7_Classic_Bold_53);
-    display.setCursor(6, 53+5);
+    display.setCursor(6, 53 + 5);
     // int displayHour;
     // if(HOUR_SET==12)
     // {
     //     displayHour = ((currentTime.Hour+11)%12)+1;
-    // } 
-    // else 
+    // }
+    // else
     // {
     //     displayHour = currentTime.Hour;
     // }
@@ -209,20 +212,19 @@ void Watchy7SEG::drawTime()
         display.drawBitmap(155, 5, fd_8, 33, 53, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
     else if (d == 9)
         display.drawBitmap(155, 5, fd_9, 33, 53, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-        
 }
 
 void Watchy7SEG::drawDate()
 {
     display.setFont(&Seven_Segment10pt7b);
 
-    int16_t  x1, y1;
+    int16_t x1, y1;
     uint16_t w, h;
 
     String dayOfWeek = dayStr(currentTime.Wday);
     dayOfWeek = dayOfWeek.substring(0, dayOfWeek.length() - 3);
     display.getTextBounds(dayOfWeek, 5, 85, &x1, &y1, &w, &h);
-    if(currentTime.Wday == 4)
+    if (currentTime.Wday == 4)
     {
         w = w - 5;
     }
@@ -382,8 +384,8 @@ void Watchy7SEG::drawDate()
         display.drawBitmap(71, 129, dd_8, 16, 25, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
     else if (f == 9)
         display.drawBitmap(71, 129, dd_9, 16, 25, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-
 }
+
 void Watchy7SEG::drawSteps()
 {
     // reset step counter at midnight
@@ -547,11 +549,16 @@ void Watchy7SEG::drawSteps()
 
 int mapBatteryLevel(float voltage, float minVoltage, float maxVoltage, int minLevel, int maxLevel)
 {
-    if (voltage <= minVoltage) {
+    if (voltage <= minVoltage)
+    {
         return minLevel;
-    } else if (voltage >= maxVoltage) {
+    }
+    else if (voltage >= maxVoltage)
+    {
         return maxLevel;
-    } else {
+    }
+    else
+    {
         return (int)((voltage - minVoltage) * (maxLevel - minLevel) / (maxVoltage - minVoltage) + minLevel);
     }
 }
@@ -564,7 +571,7 @@ void Watchy7SEG::drawBattery()
 #ifdef ARDUINO_ESP32S3_DEV
     float MaxVBAT = 3.9;
     float MinVBAT = 3.6;
-#else   
+#else
     float MaxVBAT = 4.1;
     float MinVBAT = 3.8;
 #endif
@@ -579,9 +586,10 @@ void Watchy7SEG::drawField()
     display.drawBitmap(0, 0, field, 200, 200, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
 }
 
-void Watchy7SEG::drawMoon() {
-    moonData_t moon;                        // variable to receive the data
-    
+void Watchy7SEG::drawMoon()
+{
+    moonData_t moon; // variable to receive the data
+
     // January 31st, 2020 @ 1:30PM UTC
     int year = currentTime.Year + 1970;
     int32_t month = currentTime.Month;
@@ -592,8 +600,6 @@ void Watchy7SEG::drawMoon() {
 
     int ag = moon.angle;
     double lt = moon.percentLit;
-
-
 
     // Waxing: 0-180
     // Waning: 180-360
@@ -613,7 +619,7 @@ void Watchy7SEG::drawMoon() {
             display.drawBitmap(131, 74, luna9, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
         else if (lt < 0.9)
             display.drawBitmap(131, 74, luna8, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-        else 
+        else
             display.drawBitmap(131, 74, luna7, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
     }
     else
@@ -630,7 +636,7 @@ void Watchy7SEG::drawMoon() {
             display.drawBitmap(131, 74, luna5, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
         else if (lt < 0.9)
             display.drawBitmap(131, 74, luna6, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-        else 
+        else
             display.drawBitmap(131, 74, luna7, 61, 61, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
     }
 
@@ -649,7 +655,8 @@ void Watchy7SEG::drawMoon() {
     //  Serial.println( moon.percentLit * 100 );  // percentLit is a real between 0-1
 }
 
-void Watchy7SEG::drawSun() {
+void Watchy7SEG::drawSun()
+{
     Dusk2Dawn location(LOC);
     int year = currentTime.Year + 1970;
     int32_t month = currentTime.Month;
@@ -675,7 +682,7 @@ void Watchy7SEG::drawSun() {
         rh -= 12;
     }
 
-    if (HOUR_SET == false && sh >12)
+    if (HOUR_SET == false && sh > 12)
     {
         sh -= 12;
     }
@@ -858,77 +865,77 @@ void Watchy7SEG::drawSun() {
         display.drawBitmap(132, 137, num_9, 3, 5, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
 }
 
-//void Watchy7SEG::drawWeather()
+// void Watchy7SEG::drawWeather()
 //{
 //
-//    weatherData currentWeather = getWeatherData();
+//     weatherData currentWeather = getWeatherData();
 //
-//    int8_t temperature = currentWeather.temperature;
-//    int16_t weatherConditionCode = currentWeather.weatherConditionCode;
+//     int8_t temperature = currentWeather.temperature;
+//     int16_t weatherConditionCode = currentWeather.weatherConditionCode;
 //
-//    display.setFont(&DSEG7_Classic_Regular_39);
-//    int16_t  x1, y1;
-//    uint16_t w, h;
-//    display.getTextBounds(String(temperature), 0, 0, &x1, &y1, &w, &h);
-//    if(159 - w - x1 > 87)
-//    {
-//        display.setCursor(159 - w - x1, 150);
-//    }
-//    else
-//    {
-//        display.setFont(&DSEG7_Classic_Bold_25);
-//        display.getTextBounds(String(temperature), 0, 0, &x1, &y1, &w, &h);
-//        display.setCursor(159 - w - x1, 136);
-//    }
-//    display.println(temperature);
-//    display.drawBitmap(165, 110, currentWeather.isMetric ? celsius : fahrenheit, 26, 20, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-//    const unsigned char* weatherIcon;
+//     display.setFont(&DSEG7_Classic_Regular_39);
+//     int16_t  x1, y1;
+//     uint16_t w, h;
+//     display.getTextBounds(String(temperature), 0, 0, &x1, &y1, &w, &h);
+//     if(159 - w - x1 > 87)
+//     {
+//         display.setCursor(159 - w - x1, 150);
+//     }
+//     else
+//     {
+//         display.setFont(&DSEG7_Classic_Bold_25);
+//         display.getTextBounds(String(temperature), 0, 0, &x1, &y1, &w, &h);
+//         display.setCursor(159 - w - x1, 136);
+//     }
+//     display.println(temperature);
+//     display.drawBitmap(165, 110, currentWeather.isMetric ? celsius : fahrenheit, 26, 20, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
+//     const unsigned char* weatherIcon;
 //
-//    //https://openweathermap.org/weather-conditions
-//    if(weatherConditionCode > 801)
-//    {
-//        //Cloudy
-//        weatherIcon = cloudy;
-//    }
-//    else if(weatherConditionCode == 801)
-//    {
-//        //Few Clouds
-//        weatherIcon = cloudsun;
-//    }
-//    else if(weatherConditionCode == 800)
-//    {
-//        //Clear
-//        weatherIcon = sunny;
-//    }
-//    else if(weatherConditionCode >=700)
-//    {
-//        //Atmosphere
-//        weatherIcon = atmosphere;
-//    }
-//    else if(weatherConditionCode >=600)
-//    {
-//        //Snow
-//        weatherIcon = snow;
-//    }
-//    else if(weatherConditionCode >=500)
-//    {
-//        //Rain
-//        weatherIcon = rain;
-//    }
-//    else if(weatherConditionCode >=300)
-//    {
-//        //Drizzle
-//        weatherIcon = drizzle;
-//    }
-//    else if(weatherConditionCode >=200)
-//    {
-//        //Thunderstorm
-//        weatherIcon = thunderstorm;
-//    }
-//    else
-//        return;
-//    display.drawBitmap(145, 158, weatherIcon, WEATHER_ICON_WIDTH, WEATHER_ICON_HEIGHT, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
-//}
+//     //https://openweathermap.org/weather-conditions
+//     if(weatherConditionCode > 801)
+//     {
+//         //Cloudy
+//         weatherIcon = cloudy;
+//     }
+//     else if(weatherConditionCode == 801)
+//     {
+//         //Few Clouds
+//         weatherIcon = cloudsun;
+//     }
+//     else if(weatherConditionCode == 800)
+//     {
+//         //Clear
+//         weatherIcon = sunny;
+//     }
+//     else if(weatherConditionCode >=700)
+//     {
+//         //Atmosphere
+//         weatherIcon = atmosphere;
+//     }
+//     else if(weatherConditionCode >=600)
+//     {
+//         //Snow
+//         weatherIcon = snow;
+//     }
+//     else if(weatherConditionCode >=500)
+//     {
+//         //Rain
+//         weatherIcon = rain;
+//     }
+//     else if(weatherConditionCode >=300)
+//     {
+//         //Drizzle
+//         weatherIcon = drizzle;
+//     }
+//     else if(weatherConditionCode >=200)
+//     {
+//         //Thunderstorm
+//         weatherIcon = thunderstorm;
+//     }
+//     else
+//         return;
+//     display.drawBitmap(145, 158, weatherIcon, WEATHER_ICON_WIDTH, WEATHER_ICON_HEIGHT, DARKMODE ? GxEPD_WHITE : GxEPD_BLACK);
+// }
 
 // void Watchy7SEG::drawEva()
 // {
