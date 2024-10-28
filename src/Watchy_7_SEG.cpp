@@ -8,6 +8,7 @@
 
 // change it to your location
 // latitude, longitude, timezone
+// Currently set to Wellington, NZ
 #define LOC -41.28664, 174.77557, 13
 
 RTC_DATA_ATTR bool DARKMODE = false;
