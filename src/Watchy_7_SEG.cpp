@@ -8,7 +8,7 @@
 
 // change it to your location 
 //          latitude, longitude, timezone
-#define LOC 31.00, 121.00, 8
+#define LOC -41.28664, 174.77557, 13
 
 RTC_DATA_ATTR bool DARKMODE = false;
 // RTC_DATA_ATTR int showState = 0;
