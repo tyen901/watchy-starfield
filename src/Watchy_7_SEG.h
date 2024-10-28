@@ -25,7 +25,7 @@ class Watchy7SEG : public Watchy{
         void drawMoon();
 
         void drawSun();
-        virtual void handleButtonPress();
+        virtual void handleButtonPress(WatchyButton button);
 
 
 
